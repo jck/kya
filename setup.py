@@ -21,7 +21,8 @@ setup(
     description='what?',
     zip_safe=False,
     install_requires=[
-        'pyxdg'
+        'click',
+        'pyxdg',
     ],
     classifiers=[
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
@@ -30,7 +31,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'kya=kya.kya:cli'
+            'kya=kya.cli:main'
         ]
     }
 )
