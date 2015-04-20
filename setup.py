@@ -23,6 +23,7 @@ setup(
     install_requires=[
         'click',
         'pyxdg',
+        'quamash',
     ],
     classifiers=[
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
