@@ -8,7 +8,9 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QListWidget, QListWidgetItem
 
 from xdg.BaseDirectory import load_data_paths
+from xdg.Config import setIconTheme
 from xdg.DesktopEntry import DesktopEntry
+from xdg.IconTheme import getIconPath
 
 
 class App:
@@ -21,7 +23,7 @@ class App:
 
     @property
     def icon(self):
-        return self._d.getIcon()
+        return getIconPath(self._d.getIcon())
 
     def launch(self):
         c = shlex.split(re.sub('%[fFuUdDnNickvm]', '', self._d.getExec()))
@@ -31,6 +33,7 @@ class App:
 
 class Results(QListWidget):
     def __init__(self):
+        setIconTheme(QIcon.themeName())
         self.apps = []
         for d in load_data_paths('applications'):
             for a in Path(d).glob('*.desktop'):
@@ -38,6 +41,6 @@ class Results(QListWidget):
         super().__init__()
 
     def add(self, app):
-        item = QListWidgetItem(QIcon.fromTheme(app.icon), app.name)
+        item = QListWidgetItem(QIcon(app.icon), app.name)
         item.setData(Qt.UserRole, app)
         self.addItem(item)
