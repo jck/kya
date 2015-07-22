@@ -8,7 +8,7 @@ setup(
     author='Keerthan Jaic',
     author_email='jckeerthan@gmail.com',
     url='http://github.com/jck/kya',
-    packages=['kya'],
+    packages=['kya', 'kya.plugins'],
     description='what?',
     zip_safe=False,
     setup_requires=['setuptools_scm'],
