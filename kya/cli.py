@@ -7,7 +7,14 @@ from quamash import QEventLoop
 
 from .app import Kya
 
-@click.group(invoke_without_command=True)
+CONTEXT_SETTINGS = {
+    'help_option_names': ['-h', '--help']
+}
+
+
+@click.group(invoke_without_command=True,
+             context_settings=CONTEXT_SETTINGS
+             )
 @click.pass_context
 def cli(ctx):
     ctx.obj = QApplication([])
