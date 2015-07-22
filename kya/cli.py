@@ -5,6 +5,7 @@ import click
 from PyQt5.QtWidgets import QApplication
 from quamash import QEventLoop
 
+from . import __version__
 from .app import Kya
 
 CONTEXT_SETTINGS = {
@@ -15,6 +16,7 @@ CONTEXT_SETTINGS = {
 @click.group(invoke_without_command=True,
              context_settings=CONTEXT_SETTINGS
              )
+@click.version_option(__version__, '-V', '--version')
 @click.pass_context
 def cli(ctx):
     ctx.obj = QApplication([])
