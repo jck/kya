@@ -34,4 +34,3 @@ def launch(app):
     with loop:
         widget = Kya('applauncher')
         loop.run_forever()
-    sys.exit(app.exec_())
