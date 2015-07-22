@@ -1,4 +1,5 @@
 import asyncio
+import signal
 import sys
 
 import click
@@ -23,11 +24,13 @@ def cli(ctx):
     if ctx.invoked_subcommand is None:
         ctx.invoke(launch)
 
+
 @cli.command()
 @click.pass_obj
 def launch(app):
     loop = QEventLoop(app)
     asyncio.set_event_loop(loop)
+    loop.add_signal_handler(signal.SIGINT, sys.exit)
     with loop:
         widget = Kya('applauncher')
         loop.run_forever()
