@@ -7,14 +7,19 @@ from quamash import QEventLoop
 
 from .app import Kya
 
+@click.group(invoke_without_command=True)
+@click.pass_context
+def cli(ctx):
+    ctx.obj = QApplication([])
+    if ctx.invoked_subcommand is None:
+        ctx.invoke(launch)
 
-@click.command()
-@click.argument('plugin')
-def main(plugin):
-    app = QApplication([])
+@cli.command()
+@click.pass_obj
+def launch(app):
     loop = QEventLoop(app)
     asyncio.set_event_loop(loop)
     with loop:
-        widget = Kya(plugin)
+        widget = Kya('applauncher')
         loop.run_forever()
     sys.exit(app.exec_())

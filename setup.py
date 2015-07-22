@@ -23,7 +23,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'kya=kya.cli:main'
+            'kya=kya.cli:cli'
         ]
     }
 )
