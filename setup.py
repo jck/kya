@@ -1,5 +1,6 @@
 from setuptools import setup
 
+tests_require = ['pytest', 'pytest-qt']
 
 setup(
     name='kya',
@@ -16,6 +17,10 @@ setup(
         'pyxdg',
         'quamash',
     ],
+    tests_require=tests_require,
+    extras_require={
+        'testing': tests_require,
+    },
     classifiers=[
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
         'Programming Language :: Python :: 3',
