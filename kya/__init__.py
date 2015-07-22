@@ -1,1 +1,1 @@
-__version__ = '0.1.0.dev0'
+__version__ = __import__('pkg_resources').get_distribution(__name__).version
