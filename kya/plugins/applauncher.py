@@ -16,18 +16,12 @@ from xdg.IconTheme import getIconPath
 class App:
     def __init__(self, d):
         self._d = DesktopEntry(str(d))
-
-    @property
-    def name(self):
-        return self._d.getName()
-
-    @property
-    def icon(self):
-        return getIconPath(self._d.getIcon())
+        self.name = self._d.getName()
+        self.icon = getIconPath(self._d.getIcon())
+        self.exe = shlex.split(re.sub('%[fFuUdDnNickvm]', '', self._d.getExec()))
 
     def launch(self):
-        c = shlex.split(re.sub('%[fFuUdDnNickvm]', '', self._d.getExec()))
-        subprocess.Popen(c, close_fds=True, stdin=None, stdout=None,
+        subprocess.Popen(self.exe, close_fds=True, stdin=None, stdout=None,
                          stderr=None)
 
 
