@@ -1,23 +1,24 @@
 import re
 import shlex
 import subprocess
+from functools import partial
 from pathlib import Path
+
+from collections import namedtuple
 
 from xdg.BaseDirectory import load_data_paths
 from xdg.DesktopEntry import DesktopEntry
 from xdg.IconTheme import getIconPath
 
 
-class App:
-    def __init__(self, d):
-        self._d = DesktopEntry(str(d))
-        self.name = self._d.getName()
-        self.icon = getIconPath(self._d.getIcon())
-        self.exe = shlex.split(re.sub('%[fFuUdDnNickvm]', '', self._d.getExec()))
-
-    def launch(self):
-        subprocess.Popen(self.exe, close_fds=True, stdin=None, stdout=None,
-                         stderr=None)
+class App(namedtuple('App', 'name icon launch')):
+    def __new__(cls, desk):
+        desk = DesktopEntry(str(a))
+        name = desk.getName()
+        icon = getIconPath(desk.getIcon())
+        exe = shlex.split(re.sub('%[fFuUdDnNickvm]', '', desk.getExec()))
+        launch = partial(subprocess.Popen, exe)
+        return super().__new__(cls, name, icon, launch)
 
 
 apps = []
