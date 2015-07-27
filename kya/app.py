@@ -51,3 +51,4 @@ class Kya(QWidget):
         res = extractBests(q, self.results.apps, processor=lambda x: x.name, limit=8)
         for r,s in res:
             self.results.add(r)
+        self.results.setCurrentRow(0)
