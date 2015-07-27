@@ -1,3 +1,4 @@
+from fuzzywuzzy.process import extractBests
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import (QApplication, QLineEdit, QListWidget,
@@ -47,6 +48,6 @@ class Kya(QWidget):
     def handle_query(self):
         self.results.clear()
         q = self.query.text().lower()
-        res = (a for a in self.results.apps if a.name.lower().startswith(q))
-        for r in res:
+        res = extractBests(q, self.results.apps, processor=lambda x: x.name, limit=8)
+        for r,s in res:
             self.results.add(r)

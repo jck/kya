@@ -3,7 +3,8 @@ from setuptools import setup
 reqs=[
     'quamash',
     'click',
-    'pyxdg'
+    'pyxdg',
+    'fuzzywuzzy'
 ],
 test_reqs = ['pytest', 'pytest-qt']
 requires = {
