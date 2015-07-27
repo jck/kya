@@ -1,6 +1,19 @@
 from setuptools import setup
 
-tests_require = ['pytest', 'pytest-qt']
+reqs=[
+    'quamash',
+    'click',
+    'pyxdg'
+],
+test_reqs = ['pytest', 'pytest-qt']
+requires = {
+    'setup_requires': ['setuptools_scm'],
+    'install_requires': reqs,
+    'tests_require': test_reqs,
+    'extras_require': {
+        'testing': test_reqs,
+    }
+}
 
 setup(
     name='kya',
@@ -11,16 +24,6 @@ setup(
     packages=['kya', 'kya.plugins'],
     description='what?',
     zip_safe=False,
-    setup_requires=['setuptools_scm'],
-    install_requires=[
-        'click',
-        'pyxdg',
-        'quamash',
-    ],
-    tests_require=tests_require,
-    extras_require={
-        'testing': tests_require,
-    },
     classifiers=[
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
         'Programming Language :: Python :: 3',
@@ -31,5 +34,6 @@ setup(
         'console_scripts': [
             'kya=kya.cli:cli'
         ]
-    }
+    },
+    **requires
 )
