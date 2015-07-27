@@ -3,11 +3,21 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import (QApplication, QLineEdit, QListWidget,
                              QListWidgetItem, QVBoxLayout, QWidget)
+from xdg.Config import setIconTheme
 
-from .plugins import applauncher
 
 class Query(QLineEdit):
     pass
+
+class Results(QListWidget):
+    def __init__(self):
+        setIconTheme(QIcon.themeName())
+        super().__init__()
+
+    def add(self, res):
+        item = QListWidgetItem(QIcon(res.icon), res.name)
+        item.setData(Qt.UserRole, res)
+        self.addItem(item)
 
 class Kya(QWidget):
     def __init__(self, plugin):
@@ -19,9 +29,13 @@ class Kya(QWidget):
 
         layout = QVBoxLayout()
         self.query = Query()
+        self.results = Results()
+
         # Hardcode for now
         if plugin == 'applauncher':
-            self.results = applauncher.Results()
+            from .plugins import applauncher
+            self.all_results = applauncher.apps
+
         self.query.textChanged.connect(self.handle_query)
         self.query.setFocusPolicy(Qt.StrongFocus)
         self.results.setFocusPolicy(Qt.NoFocus)
@@ -47,8 +61,8 @@ class Kya(QWidget):
 
     def handle_query(self):
         self.results.clear()
-        q = self.query.text().lower()
-        res = extractBests(q, self.results.apps, processor=lambda x: x.name, limit=8)
+        res = extractBests(self.query.text(), self.all_results, 
+                           processor=lambda x: x.name, limit=8)
         for r,s in res:
             self.results.add(r)
         self.results.setCurrentRow(0)
