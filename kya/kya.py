@@ -49,13 +49,13 @@ class Kya(QWidget):
     def keyPressEvent(self, e):
         k = e.key()
         if k == Qt.Key_Escape:
-            QApplication.quit()
+            self.hide()
         elif k == Qt.Key_Tab:
             self.results.setCurrentRow(self.results.currentRow()+1)
         elif k == Qt.Key_Return:
             item = self.results.currentItem().data(Qt.UserRole)
             item.launch()
-            QApplication.quit()
+            self.hide()
 
         super().keyPressEvent(e)
 
