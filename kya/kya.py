@@ -56,6 +56,7 @@ class Kya(QWidget):
             item = self.results.currentItem().data(Qt.UserRole)
             item.launch()
             self.hide()
+            self.query.clear()
 
         super().keyPressEvent(e)
 
