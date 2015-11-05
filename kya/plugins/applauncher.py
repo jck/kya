@@ -10,6 +10,8 @@ from xdg.BaseDirectory import load_data_paths
 from xdg.DesktopEntry import DesktopEntry
 from xdg.IconTheme import getIconPath
 
+from PyQt5.QtCore import QProcess
+
 
 class App(namedtuple('App', 'name icon launch')):
     def __new__(cls, desk):
@@ -17,7 +19,7 @@ class App(namedtuple('App', 'name icon launch')):
         name = desk.getName()
         icon = getIconPath(desk.getIcon())
         exe = shlex.split(re.sub('%[fFuUdDnNickvm]', '', desk.getExec()))
-        launch = partial(subprocess.Popen, exe)
+        launch = partial(QProcess.startDetached, exe[0], exe[1:])
         return super().__new__(cls, name, icon, launch)
 
 
