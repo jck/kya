@@ -62,8 +62,7 @@ class Kya(QWidget):
 
     def handle_query(self):
         self.results.clear()
-        res = extractBests(self.query.text(), self.all_results, 
-                           processor=lambda x: x.name, limit=8)
-        for r,s in res:
+        res = extractBests(self.query.text(), self.all_results, limit=8)
+        for r, s in res:
             self.results.add(r)
         self.results.setCurrentRow(0)
